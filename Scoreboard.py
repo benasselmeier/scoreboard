@@ -1,4 +1,3 @@
-#imports for motion sensors already here, lightswitch on/off as necessary
 #from gpiozero import MotionSensor
 from playsound import playsound
 import os
