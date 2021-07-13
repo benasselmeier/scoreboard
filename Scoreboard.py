@@ -1,5 +1,8 @@
 #imports for motion sensors already here, lightswitch on/off as necessary
 #from gpiozero import MotionSensor
+from playsound import playsound
+import os
+import random
 
 class Scoreboard():
     # sensorBlack = MotionSensor()
@@ -15,15 +18,22 @@ class Scoreboard():
     yellowScore = 0
     blackWins = 0
     yellowWins = 0
+    def goalSound():
+        sounds = os.listdir('./Sounds/')
+        soundToPlay = str('./Sounds/' + random.choice(sounds))
+        playsound(soundToPlay)
+
             
     while blackWins < 2 and yellowWins < 2:
+        if blackScore == 6 or yellowScore == 6:
+            print("Game Point!")
         testValue = input("Jank testing suite - input 'y' for yellow goals and 'b' for black goals. \n")
         if testValue == "b":
             #sensorBlack.wait_for_motion()
             print("Black team scored!")
-            #airhorn
+            goalSound()
             blackScore = blackScore + 1
-            print ("New score: " + str(blackScore))
+            print ("Game Score:\nBlack Team: " + str(blackScore) + "\nYellow Team: " + str(yellowScore))
         if blackScore == 7:
             print("Black team wins game " + str(currentGame) + "!")
             blackWins = blackWins + 1
@@ -40,8 +50,6 @@ class Scoreboard():
         if testValue == "y":
             #sensorYellow.wait_for_motion()
             print("Yellow team scored!")
-            #airhorn
-            yellowScore = yellowScore + 1
             print ("New score: " + str(yellowScore))
         if yellowScore == 7:
             print("Yellow Team wins game " + str(currentGame) + "!")
