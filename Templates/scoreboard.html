@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+
+{%block content %}
+
+<div class = "scoreboard">
+    <div class = "black-team">
+        <div class = "black-match-wins">
+            <p>Games won:</p>
+            <p>{{blackWins}}</p>
+        </div>
+        <div class = "black-game-score">
+            <p>Black Team Score:</p>
+            <br>
+            <p>{{blackScore}}</p>
+        </div>
+    </div>
+    <div class = "gameCount">
+        <p>{{currentGame}}</p>
+    </div>
+    <div class yellow-team>
+        <div class = "yellow-match-wins">
+            <p>Games won:</p>
+            <p>{{yellowWins}}</p>
+        </div>
+        <div class = "yellow-game-score">
+            <p>Yellow Team Score:</p>
+            <br>
+            <p>{{yellowScore}}</p>
+        </div>
+    </div>
+</div>
