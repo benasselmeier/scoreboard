@@ -1,4 +1,4 @@
-#from gpiozero import MotionSensor
+from gpiozero import MotionSensor
 from flask import Flask, flash, redirect, render_template, request, session
 from playsound import playsound
 import os
@@ -7,8 +7,8 @@ import random
 app = Flask(__name__)
 
 class Scoreboard():
-    # sensorBlack = MotionSensor()
-    # sensorYellow = MotionSensor()
+     sensorBlack = MotionSensor()
+     sensorYellow = MotionSensor()
 
     def __init__():
         print(
@@ -50,10 +50,10 @@ class Scoreboard():
         if blackScore > 0 or yellowScore > 0:
             print ("Game Score:\nBlack Team: " + str(blackScore) + "\nYellow Team: " + str(yellowScore))
 
-        testValue = input("Input 'y' for yellow goals and 'b' for black goals. \n")
+        #testValue = input("Input 'y' for yellow goals and 'b' for black goals. \n")
 
-        if testValue == "b":
-            #sensorBlack.wait_for_motion()
+        #if testValue == "b":
+            sensorBlack.wait_for_motion()
             print("Black team scored!")
             blackScore = blackScore + 1
             goalSound()
@@ -69,8 +69,8 @@ class Scoreboard():
                     currentGame = currentGame + 1
                     gameWinSound()
 
-        if testValue == "y":
-            #sensorYellow.wait_for_motion()
+        #if testValue == "y":
+            sensorYellow.wait_for_motion()
             print("Yellow team scored!")
             yellowScore = yellowScore + 1
             goalSound()
