@@ -19,7 +19,7 @@ class Scoreboard():
     blackWins = 0
     yellowWins = 0
     sensorBlack = MotionSensor(4)
-    #sensorYellow = MotionSensor()
+    sensorYellow = MotionSensor(17)
 
     def goalSound():
         sounds = os.listdir('./Sounds/Goal/')
@@ -49,7 +49,6 @@ class Scoreboard():
         if blackScore > 0 or yellowScore > 0:
             print ("Game Score:\nBlack Team: " + str(blackScore) + "\nYellow Team: " + str(yellowScore))
 
-        #testValue = input("Input 'y' for yellow goals and 'b' for black goals. \n")
 
     #if testValue == "b":
         sensorBlack.wait_for_motion()
@@ -67,19 +66,19 @@ class Scoreboard():
                 print("Black team wins game " + str(currentGame) + "!")
                 currentGame = currentGame + 1
                 gameWinSound()
-    # #if testValue == "y":
-    #     sensorYellow.wait_for_motion()
-    #     print("Yellow team scored!")
-    #     yellowScore = yellowScore + 1
-    #     goalSound()
-    #     if yellowScore == 7:
-    #         blackScore = 0
-    #         yellowScore = 0
-    #         yellowWins = yellowWins + 1
-    #         if yellowWins == 2:
-    #             print("Yellow team wins the match!")
-    #             matchWinSound()
-    #         else:
-    #             print("Yellow team wins game " + str(currentGame) + "!")
-    #             currentGame = currentGame + 1
-    #             gameWinSound()
+    #if testValue == "y":
+        sensorYellow.wait_for_motion()
+        print("Yellow team scored!")
+        yellowScore = yellowScore + 1
+        goalSound()
+        if yellowScore == 7:
+            blackScore = 0
+            yellowScore = 0
+            yellowWins = yellowWins + 1
+            if yellowWins == 2:
+                print("Yellow team wins the match!")
+                matchWinSound()
+            else:
+                print("Yellow team wins game " + str(currentGame) + "!")
+                currentGame = currentGame + 1
+                gameWinSound()
