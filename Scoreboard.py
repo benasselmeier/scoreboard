@@ -24,6 +24,7 @@ class Scoreboard():
     def goalSound():
         sounds = os.listdir('./Sounds/Goal/')
         soundToPlay = str('./Sounds/Goal/' + random.choice(sounds))
+        print(soundToPlay)
         playsound(soundToPlay)
 
     def gameWinSound():
@@ -49,8 +50,6 @@ class Scoreboard():
         if blackScore > 0 or yellowScore > 0:
             print ("Game Score:\nBlack Team: " + str(blackScore) + "\nYellow Team: " + str(yellowScore))
 
-
-    #if testValue == "b":
         sensorBlack.wait_for_motion()
         print("Black team scored!")
         blackScore = blackScore + 1
@@ -66,7 +65,7 @@ class Scoreboard():
                 print("Black team wins game " + str(currentGame) + "!")
                 currentGame = currentGame + 1
                 gameWinSound()
-    #if testValue == "y":
+
         sensorYellow.wait_for_motion()
         print("Yellow team scored!")
         yellowScore = yellowScore + 1
