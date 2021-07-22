@@ -1,31 +1,25 @@
 import gpiozero
 from gpiozero import MotionSensor
-from gpiozero.pins.mock import MockFactory
-from flask import Flask, flash, redirect, render_template, request, session
 from playsound import playsound
 import os
 import random
 
-app = Flask(__name__)
-
 class Scoreboard():
 
-    def __init__():
-        print(
+    print(
             '''
             Scoreboard started! Get to foosin'!
             '''
         )
 
-    gpiozero.Device.pin_factory = MockFactory()
 
     currentGame = 1
     blackScore = 0
     yellowScore = 0
     blackWins = 0
     yellowWins = 0
-    sensorBlack = MotionSensor()
-    sensorYellow = MotionSensor()
+    sensorBlack = MotionSensor(4)
+    #sensorYellow = MotionSensor()
 
     def goalSound():
         sounds = os.listdir('./Sounds/Goal/')
