@@ -46,7 +46,7 @@ class Scoreboard():
         sounds = os.listdir('./Sounds/Funmode/')
         soundToPlay = str('./Sounds/Funmode/' + random.choice(sounds))
         playsound(soundToPlay)
-    
+
 
 
     while blackWins < 2 and yellowWins < 2:
@@ -73,19 +73,19 @@ class Scoreboard():
                 print("Black team wins game " + str(currentGame) + "!")
                 currentGame = currentGame + 1
                 gameWinSound()
-    #if testValue == "y":
-        sensorYellow.wait_for_motion()
-        print("Yellow team scored!")
-        yellowScore = yellowScore + 1
-        goalSound()
-        if yellowScore == 7:
-            blackScore = 0
-            yellowScore = 0
-            yellowWins = yellowWins + 1
-            if yellowWins == 2:
-                print("Yellow team wins the match!")
-                matchWinSound()
-            else:
-                print("Yellow team wins game " + str(currentGame) + "!")
-                currentGame = currentGame + 1
-                gameWinSound()
+    # #if testValue == "y":
+    #     sensorYellow.wait_for_motion()
+    #     print("Yellow team scored!")
+    #     yellowScore = yellowScore + 1
+    #     goalSound()
+    #     if yellowScore == 7:
+    #         blackScore = 0
+    #         yellowScore = 0
+    #         yellowWins = yellowWins + 1
+    #         if yellowWins == 2:
+    #             print("Yellow team wins the match!")
+    #             matchWinSound()
+    #         else:
+    #             print("Yellow team wins game " + str(currentGame) + "!")
+    #             currentGame = currentGame + 1
+    #             gameWinSound()
