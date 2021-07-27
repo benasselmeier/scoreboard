@@ -4,28 +4,32 @@
 
 <div class = "scoreboard">
     <div class = "black-team">
+        <p>Black Team</p>
         <div class = "black-match-wins">
-            <p>Games won:</p>
-            <p>{{blackWins}}</p>
+            <p>Games won: {{blackWins}} </p>
+            <p></p>
         </div>
         <div class = "black-game-score">
-            <p>Black Team Score:</p>
+            <p>Score: {{blackScore}}</p>
             <br>
-            <p>{{blackScore}}</p>
+            <a href="/goal">Black Goal</a></button>
         </div>
     </div>
     <div class = "gameCount">
-        <p>{{currentGame}}</p>
+        <p>Current Game: {{currentGame}}</p>
     </div>
     <div class yellow-team>
+        <p>Yellow Team</p>
         <div class = "yellow-match-wins">
-            <p>Games won:</p>
-            <p>{{yellowWins}}</p>
+            <p>Games won: {{yellowWins}}</p>
+            <p></p>
         </div>
         <div class = "yellow-game-score">
-            <p>Yellow Team Score:</p>
+            <p>Score: {{yellowScore}}</p>
             <br>
-            <p>{{yellowScore}}</p>
+            <a href="/goal/yellow">Yellow Goal</a></button>
         </div>
     </div>
 </div>
+
+{%endblock %}
