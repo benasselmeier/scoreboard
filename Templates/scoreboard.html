@@ -3,6 +3,9 @@
 {%block content %}
 
 <div class = "scoreboard">
+    <div class = "winning-team">
+        {{winningTeam}} wins!
+    </div>
     <div class = "black-team">
         <p>Black Team</p>
         <div class = "black-match-wins">
@@ -12,7 +15,7 @@
         <div class = "black-game-score">
             <p>Score: {{blackScore}}</p>
             <br>
-            <a href="/goal">Black Goal</a></button>
+            <a href="/goal?team=black">Black Goal</a></button>
         </div>
     </div>
     <div class = "gameCount">
@@ -27,7 +30,7 @@
         <div class = "yellow-game-score">
             <p>Score: {{yellowScore}}</p>
             <br>
-            <a href="/goal/yellow">Yellow Goal</a></button>
+            <a href="/goal?team=yellow">Yellow Goal</a></button>
         </div>
     </div>
 </div>
