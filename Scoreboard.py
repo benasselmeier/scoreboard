@@ -3,6 +3,7 @@ from gpiozero import MotionSensor
 from playsound import playsound
 import os
 import random
+from self import self
 
 class Scoreboard():
 
@@ -20,6 +21,8 @@ class Scoreboard():
     yellowWins = 0
     sensorBlack = MotionSensor(4)
     sensorYellow = MotionSensor(17)
+    teamAside = 'black'
+    teamBSide = ''
 
     def goalSound():
         sounds = os.listdir('./Sounds/Goal/')
@@ -41,6 +44,10 @@ class Scoreboard():
         sounds = os.listdir('./Sounds/Funmode/')
         soundToPlay = str('./Sounds/Funmode/' + random.choice(sounds))
         playsound(soundToPlay)
+
+    def changeSides():
+        currentGame = self.currentGame + 1
+        
 
 
 
