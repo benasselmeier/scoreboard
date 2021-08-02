@@ -1,5 +1,5 @@
-import gpiozero
-from gpiozero import MotionSensor
+# import gpiozero
+# from gpiozero import MotionSensor
 from playsound import playsound
 import os
 import random
@@ -14,15 +14,26 @@ class Scoreboard():
         )
 
 
+
     currentGame = 1
     blackScore = 0
     yellowScore = 0
     blackWins = 0
     yellowWins = 0
-    sensorBlack = MotionSensor(4)
-    sensorYellow = MotionSensor(17)
+    # sensorBlack = MotionSensor(4)
+    # sensorYellow = MotionSensor(17)
     teamAside = 'black'
     teamBSide = ''
+
+    def ready():
+        print(
+            '|----------Foosball----------|\n'
+            '|Black                 Yellow|\n'
+            '|Pts:'+self.blackScore+'----|----------|----Pts:'+self.yellowScore+'|\n'
+            '|Wins:'+self.blackWins+'---|----------|---Wins:'+self.yellowWins+'|\n'
+            '|-----------Game '+self.currentGame+'-----------|\n'
+
+        )
 
     def goalSound():
         sounds = os.listdir('./Sounds/Goal/')
@@ -45,9 +56,28 @@ class Scoreboard():
         soundToPlay = str('./Sounds/Funmode/' + random.choice(sounds))
         playsound(soundToPlay)
 
-    def changeSides():
-        currentGame = self.currentGame + 1
-        
+    def blackGoal():
+        print('Black team goal!')
+        blackScore = Scoreboard.blackScore + 1
+        setattr(self, 'blackScore', blackScore)
+
+    def yellowGoal():
+        print('Yellow team goal!')
+        yellowScore = self.yellowScore + 1
+        setattr(self, 'yellowScore', yellowScore)
+
+    def newGame(team):
+        newGame = self.currentGame + 1
+        setattr(self, 'blackScore', 0)
+        setattr(self, 'yellowScore', 0)
+        setattr(self, 'currentGame', newGame)
+        if(team == 'black'):
+            newBlackWins = self.blackWins + 1
+            setattr(self, 'blackWins', newBlackWins)
+        if(team == 'yellow'):
+            newYellowWins = self.yellowWins + 1
+            setattr(self, 'yellowWins', newYellowWins)
+
 
 
 
@@ -57,34 +87,29 @@ class Scoreboard():
         if blackScore > 0 or yellowScore > 0:
             print ("Game Score:\nBlack Team: " + str(blackScore) + "\nYellow Team: " + str(yellowScore))
 
-        sensorBlack.wait_for_motion()
-        print("Black team scored!")
-        blackScore = blackScore + 1
-        goalSound()
-        if blackScore == 7:
-            blackScore = 0
-            yellowScore = 0
-            blackWins = blackWins + 1
-            if blackWins == 2:
-                print("Black team wins the match!")
-                matchWinSound()
-            else:
-                print("Black team wins game " + str(currentGame) + "!")
-                currentGame = currentGame + 1
-                gameWinSound()
+        bob = input('y or b bitchhhhhhhh')
 
-        sensorYellow.wait_for_motion()
-        print("Yellow team scored!")
-        yellowScore = yellowScore + 1
-        goalSound()
-        if yellowScore == 7:
-            blackScore = 0
-            yellowScore = 0
-            yellowWins = yellowWins + 1
-            if yellowWins == 2:
-                print("Yellow team wins the match!")
-                matchWinSound()
-            else:
-                print("Yellow team wins game " + str(currentGame) + "!")
-                currentGame = currentGame + 1
-                gameWinSound()
+        # sensorBlack.wait_for_motion()
+        if(bob == 'b'):
+            goalSound()
+            blackGoal()
+            if blackScore == 7:
+                if blackWins == 2:
+                    print("Black team wins the match!")
+                    matchWinSound()
+                else:
+                    gameWinSound()
+                    newGame()
+            ready()
+
+        if(bob == 'y'):
+            goalSound()
+            yellowGoal()
+            if yellowScore == 7:
+                if yellowWins == 2:
+                    print("Yellow team wins the match!")
+                    matchWinSound()
+                else:
+                    gameWinSound()
+                    newGame()
+            ready()
