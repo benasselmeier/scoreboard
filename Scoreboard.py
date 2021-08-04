@@ -4,7 +4,10 @@ from playsound import playsound
 import os
 import random
 from self import self
-from flask import flask, render_template, redirect
+from flask import Flask, redirect, render_template, request
+
+app = Flask(__name__)
+app.config['DEBUG'] = True
 
 class Scoreboard():
 
@@ -150,3 +153,6 @@ while scoreboard.teamAWins < 2 and scoreboard.teamBWins < 2:
                 print(scoreboard.teamBSide + ' wins the match!')
                 # scoreboard.gameWinSound()
             else: scoreboard.newGame('Black')
+
+if __name__ == '__main__':
+    app.run()
