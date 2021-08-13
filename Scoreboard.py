@@ -36,6 +36,27 @@ class Scoreboard():
                     '|-----------Game '+str(self.currentGame)+'-----------|\n'
                 )
 
+
+
+    def winner(self, team):
+        if team == 'Black':
+            print('''
+                  ____  _            _      _____                     __        ___           _
+                 | __ )| | __ _  ___| | __ |_   _|__  __ _ _ __ ___   \ \      / (_)_ __  ___| |
+                 |  _ \| |/ _` |/ __| |/ /   | |/ _ \/ _` | '_ ` _ \   \ \ /\ / /| | '_ \/ __| |
+                 | |_) | | (_| | (__|   <    | |  __/ (_| | | | | | |   \ V  V / | | | | \__ \_|
+                 |____/|_|\__,_|\___|_|\_\   |_|\___|\__,_|_| |_| |_|    \_/\_/  |_|_| |_|___(_)
+            ''')
+
+        if team == 'Yellow':
+            print('''
+                 __   __   _ _                 _____                     __        ___           _
+                 \ \ / /__| | | _____      __ |_   _|__  __ _ _ __ ___   \ \      / (_)_ __  ___| |
+                  \ V / _ \ | |/ _ \ \ /\ / /   | |/ _ \/ _` | '_ ` _ \   \ \ /\ / /| | '_ \/ __| |
+                   | |  __/ | | (_) \ V  V /    | |  __/ (_| | | | | | |   \ V  V / | | | | \__ \_|
+                   |_|\___|_|_|\___/ \_/\_/     |_|\___|\__,_|_| |_| |_|    \_/\_/  |_|_| |_|___(_)
+            ''')
+
     def goalSound(self):
         sounds = os.listdir('./Sounds/Goal/')
         soundToPlay = str('./Sounds/Goal/' + random.choice(sounds))
@@ -75,9 +96,6 @@ class Scoreboard():
             setattr(self,'teamBScore', teamBScore)
 
     def newGame(self, team):
-        currentGame = self.currentGame + 1
-        if(currentGame <= 3):
-            print('Game ' + str(currentGame) + ' starting. Switch sides!')
         if(team == 'Black'):
             if(self.teamASide == team):
                 teamAWins = scoreboard.teamAWins + 1
@@ -92,9 +110,13 @@ class Scoreboard():
             if(self.teamBSide == team):
                 teamBWins = scoreboard.teamBWins + 1
                 setattr(self,'teamBWins', teamBWins)
-        if(self.teamAWins == 2 or self.teamBWins == 2):
-            print('match over nerds')
-            return
+        currentGame = self.currentGame + 1
+        if(self.teamAWins < 2 and self.teamBWins < 2):
+            print('Game ' + str(currentGame) + ' starting. Switch sides!')
+        if(self.teamAWins == 2):
+            return scoreboard.winner(self.teamASide)
+        if(self.teamBWins == 2):
+            return scoreboard.winner(self.teamBSide)
         else:
             setattr(self, 'teamAScore', 0)
             setattr(self, 'teamBScore', 0)
@@ -105,20 +127,21 @@ class Scoreboard():
             if(self.currentGame == 2):
                 setattr(self, 'teamASide', 'Yellow')
                 setattr(self, 'teamBSide', 'Black')
-            scoreboard.display()
+
 
 scoreboard = Scoreboard()
 
-@app.before_first_request
-def setup():
-    setattr(scoreboard,'teamAScore', 0)
-    setattr(scoreboard,'teamBScore', 0)
-    setattr(scoreboard,'teamAWins', 0)
-    setattr(scoreboard,'teamBWins', 0)
-    setattr(scoreboard,'teamASide', 'Black')
-    setattr(scoreboard,'teamBSide', 'Yellow')
-    setattr(scoreboard,'currentGame', 1)
+# @app.before_first_request
+# def setup():
+#     setattr(scoreboard,'teamAScore', 0)
+#     setattr(scoreboard,'teamBScore', 0)
+#     setattr(scoreboard,'teamAWins', 0)
+#     setattr(scoreboard,'teamBWins', 0)
+#     setattr(scoreboard,'teamASide', 'Black')
+#     setattr(scoreboard,'teamBSide', 'Yellow')
+#     setattr(scoreboard,'currentGame', 1)
 
+@app.route('/')
 def renderView():
     return render_template('index.html',
     teamAScore = scoreboard.teamAScore,
@@ -130,61 +153,55 @@ def renderView():
     teamBSide = scoreboard.teamBSide,
     )
 
-@app.route('/')
-def index():
 
-    scoreboard.display()
-    renderView()
-    while scoreboard.teamAWins < 2 and scoreboard.teamBWins < 2:
-        if(scoreboard.teamAScore < 7 or scoreboard.teamBScore < 7):
-            bob = input('y or b ')
-            doTheScoringThing(bob)
-            return renderView()
-
-
-def doTheScoringThing(bob):
     # while scoreboard.teamAWins < 2 and scoreboard.teamBWins < 2:
     #     if scoreboard.teamAScore == 6 or scoreboard.teamBScore == 6:
     #         print("Game Point!")
     #     if (scoreboard.teamAScore > 0 or scoreboard.teamBScore > 0):
     #         if(scoreboard.teamAScore < 7 or scoreboard.teamBScore < 7):
-    #             scoreboard.display()
-    #             return render_template('index.html',
-    #             teamAScore = scoreboard.teamAScore,
-    #             teamBScore = scoreboard.teamBScore,
-    #             teamAWins = scoreboard.teamAWins,
-    #             teamBWins = scoreboard.teamBWins,
-    #             currentGame = scoreboard.currentGame,
-    #             teamASide = scoreboard.teamASide,
-    #             teamBSide = scoreboard.teamBSide,
-    #             )
-        # sensorBlack.wait_for_motion()
-        if(bob == 'b'):
-            # scoreboard.goalSound()
-            scoreboard.blackGoal()
-            if scoreboard.teamAScore == 7:
-                if scoreboard.teamAWins == 2:
-                    print(scoreboard.teamASide + ' wins the match!')
-                    # scoreboard.matchWinSound()
-                else: scoreboard.newGame('Black')
-            elif scoreboard.teamBScore == 7:
-                if scoreboard.teamBWins == 2:
-                    print(scoreboard.teamBSide + ' wins the match!')
-                    # scoreboard.gameWinSound()
-                else: scoreboard.newGame('Black')
-        if(bob == 'y'):
-            # scoreboard.goalSound()
-            scoreboard.yellowGoal()
-            if scoreboard.teamAScore == 7:
-                if scoreboard.teamAWins == 2:
-                    print(scoreboard.teamASide + ' wins the match!')
-                    # scoreboard.matchWinSound()
-                else: scoreboard.newGame('Yellow')
-            elif scoreboard.teamBScore == 7:
-                if scoreboard.teamBWins == 2:
-                    print(scoreboard.teamBSide + ' wins the match!')
-                    # scoreboard.gameWinSound()
-                else: scoreboard.newGame('Black')
+                # scoreboard.display()
+                # return render_template('index.html',
+                # teamAScore = scoreboard.teamAScore,
+                # teamBScore = scoreboard.teamBScore,
+                # teamAWins = scoreboard.teamAWins,
+                # teamBWins = scoreboard.teamBWins,
+                # currentGame = scoreboard.currentGame,
+                # teamASide = scoreboard.teamASide,
+                # teamBSide = scoreboard.teamBSide,
+                # )
+def doTheScoringThing(bob):
+    # sensorBlack.wait_for_motion()
+    if(bob == 'b'):
+        # scoreboard.goalSound()
+        scoreboard.blackGoal()
+        if scoreboard.teamAScore == 7:
+            if scoreboard.teamAWins == 2:
+                print(scoreboard.teamASide + ' wins the match!')
+                # scoreboard.matchWinSound()
+            else: scoreboard.newGame('Black')
+        elif scoreboard.teamBScore == 7:
+            if scoreboard.teamBWins == 2:
+                print(scoreboard.teamBSide + ' wins the match!')
+                # scoreboard.gameWinSound()
+            else: scoreboard.newGame('Black')
+    if(bob == 'y'):
+        # scoreboard.goalSound()
+        scoreboard.yellowGoal()
+        if scoreboard.teamAScore == 7:
+            if scoreboard.teamAWins == 2:
+                scoreboard.winner('Yellow')
+                # scoreboard.matchWinSound()
+            else: scoreboard.newGame('Yellow')
+        elif scoreboard.teamBScore == 7:
+            if scoreboard.teamBWins == 2:
+                scoreboard.winner('Black')
+                # scoreboard.gameWinSound()
+            else: scoreboard.newGame('Black')
 
+while scoreboard.teamAWins < 2 and scoreboard.teamBWins < 2:
+    if(scoreboard.teamAScore < 7 or scoreboard.teamBScore < 7):
+        scoreboard.display()
+        bob = input('y or b')
+        doTheScoringThing(bob)
 
 app.run()
