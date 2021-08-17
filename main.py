@@ -58,12 +58,12 @@ scoreboard = Scoreboard()
 #     )
 
 
-if scoreboard.teamAWins < 2 and scoreboard.teamBWins < 2:
-    scoreboard.display()
-    waitForGoal()
-    render()
-else:
-    scoreboard.declareWinner('Black')
-    render_template('winner.html')
+# if scoreboard.teamAWins < 2 and scoreboard.teamBWins < 2:
+#     scoreboard.display()
+#     waitForGoal()
+#     render()
+# else:
+#     scoreboard.declareWinner('Black')
+#     render_template('winner.html')
 
 # app.run()
