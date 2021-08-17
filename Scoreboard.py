@@ -1,5 +1,11 @@
+import gpiozero
+from gpiozero import MotionSensor
+from playsound import playsound
+import RPi.GPIO as GPIO
 import os
 import random
+
+GPIO.setmode(GPIO.BCM)
 
 class Scoreboard():
 
@@ -22,8 +28,6 @@ class Scoreboard():
               '|Wins:'+str(self.teamAWins)+'---|----------|-Wins:'+str(self.teamBWins)+'|\n'
               '|-----------Game '+str(self.currentGame)+'-----------|\n'
                 )
-
-        return self.currentGame, self.teamAScore, self.teamBScore, self.teamAWins, self.teamBWins, self.teamASide, self.teamBSide
 
     def addGoal(self, team):
         print (team + ' team scored!')
