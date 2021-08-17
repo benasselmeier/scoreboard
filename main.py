@@ -6,13 +6,18 @@ import os
 import random
 # from flask import Flask, redirect, render_template, request, render_template_string
 from Scoreboard import Scoreboard
+import time
 
 # app = Flask(__name__)
 GPIO.setmode(GPIO.BCM)
+GPIO.setup(4, GPIO.IN)
+GPIO.add_event_detect(4, GPIO.BOTH)
 
 sensorBlackPin = 4
 
-def waitForBlackGoal():
+
+
+while True:
     if GPIO.input(sensorBlackPin):
         # scoringTeam = 'Black'
         # scoreboard.addGoal(scoringTeam)
@@ -21,6 +26,7 @@ def waitForBlackGoal():
         # scoreboard.checkMatchWin()
         print('beam unbroken')
     else: print('beam broken!')
+    time.sleep(0.5)
 
 
 scoreboard = Scoreboard()
