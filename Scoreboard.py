@@ -1,21 +1,5 @@
-# import gpiozero
-# from gpiozero import MotionSensor
-from flask.templating import render_template_string
-# from playsound import playsound
-import os
-import random
-# from self import self
-from flask import Flask, redirect, render_template, request, render_template_string
-
-app = Flask(__name__)
-
 class Scoreboard():
 
-    print(
-            '''
-            Scoreboard started! Get to foosin'!
-            '''
-        )
     def __init__(self):
         self.currentGame = 1
         self.teamAScore = 0
@@ -57,26 +41,12 @@ class Scoreboard():
                    |_|\___|_|_|\___/ \_/\_/     |_|\___|\__,_|_| |_| |_|    \_/\_/  |_|_| |_|___(_)
             ''')
 
-    def goalSound(self):
-        sounds = os.listdir('./Sounds/Goal/')
-        soundToPlay = str('./Sounds/Goal/' + random.choice(sounds))
-        print(soundToPlay)
-        playsound(soundToPlay)
-
-    def gameWinSound(self):
-        sounds = os.listdir('./Sounds/Gamewin/')
-        soundToPlay = str('./Sounds/Gamewin/' + random.choice(sounds))
-        playsound(soundToPlay)
-
-    def matchWinSound(self):
-        sounds = os.listdir('./Sounds/Matchwin/')
-        soundToPlay = str('./Sounds/Matchwin/' + random.choice(sounds))
-        playsound(soundToPlay)
-
-    def funModeSound(self):
-        sounds = os.listdir('./Sounds/Funmode/')
-        soundToPlay = str('./Sounds/Funmode/' + random.choice(sounds))
-        playsound(soundToPlay)
+    def playSoundEffect(self, type):
+        if(type != null):
+            sounds = os.listdir('./Sounds/' + type + '/')
+            soundToPlay = str('/Sounds/' + type + '/' + random.choice(sounds))
+        else:
+            print("Something went wrong when trying to play a sound...")
 
     def blackGoal(self):
         print('Black team goal!')
@@ -127,81 +97,3 @@ class Scoreboard():
             if(self.currentGame == 2):
                 setattr(self, 'teamASide', 'Yellow')
                 setattr(self, 'teamBSide', 'Black')
-
-
-scoreboard = Scoreboard()
-
-# @app.before_first_request
-# def setup():
-#     setattr(scoreboard,'teamAScore', 0)
-#     setattr(scoreboard,'teamBScore', 0)
-#     setattr(scoreboard,'teamAWins', 0)
-#     setattr(scoreboard,'teamBWins', 0)
-#     setattr(scoreboard,'teamASide', 'Black')
-#     setattr(scoreboard,'teamBSide', 'Yellow')
-#     setattr(scoreboard,'currentGame', 1)
-
-@app.route('/')
-def renderView():
-    return render_template('index.html',
-    teamAScore = scoreboard.teamAScore,
-    teamBScore = scoreboard.teamBScore,
-    teamAWins = scoreboard.teamAWins,
-    teamBWins = scoreboard.teamBWins,
-    currentGame = scoreboard.currentGame,
-    teamASide = scoreboard.teamASide,
-    teamBSide = scoreboard.teamBSide,
-    )
-
-
-    # while scoreboard.teamAWins < 2 and scoreboard.teamBWins < 2:
-    #     if scoreboard.teamAScore == 6 or scoreboard.teamBScore == 6:
-    #         print("Game Point!")
-    #     if (scoreboard.teamAScore > 0 or scoreboard.teamBScore > 0):
-    #         if(scoreboard.teamAScore < 7 or scoreboard.teamBScore < 7):
-                # scoreboard.display()
-                # return render_template('index.html',
-                # teamAScore = scoreboard.teamAScore,
-                # teamBScore = scoreboard.teamBScore,
-                # teamAWins = scoreboard.teamAWins,
-                # teamBWins = scoreboard.teamBWins,
-                # currentGame = scoreboard.currentGame,
-                # teamASide = scoreboard.teamASide,
-                # teamBSide = scoreboard.teamBSide,
-                # )
-def doTheScoringThing(bob):
-    # sensorBlack.wait_for_motion()
-    if(bob == 'b'):
-        # scoreboard.goalSound()
-        scoreboard.blackGoal()
-        if scoreboard.teamAScore == 7:
-            if scoreboard.teamAWins == 2:
-                print(scoreboard.teamASide + ' wins the match!')
-                # scoreboard.matchWinSound()
-            else: scoreboard.newGame('Black')
-        elif scoreboard.teamBScore == 7:
-            if scoreboard.teamBWins == 2:
-                print(scoreboard.teamBSide + ' wins the match!')
-                # scoreboard.gameWinSound()
-            else: scoreboard.newGame('Black')
-    if(bob == 'y'):
-        # scoreboard.goalSound()
-        scoreboard.yellowGoal()
-        if scoreboard.teamAScore == 7:
-            if scoreboard.teamAWins == 2:
-                scoreboard.winner('Yellow')
-                # scoreboard.matchWinSound()
-            else: scoreboard.newGame('Yellow')
-        elif scoreboard.teamBScore == 7:
-            if scoreboard.teamBWins == 2:
-                scoreboard.winner('Black')
-                # scoreboard.gameWinSound()
-            else: scoreboard.newGame('Black')
-
-while scoreboard.teamAWins < 2 and scoreboard.teamBWins < 2:
-    if(scoreboard.teamAScore < 7 or scoreboard.teamBScore < 7):
-        scoreboard.display()
-        bob = input('y or b')
-        doTheScoringThing(bob)
-
-app.run()
