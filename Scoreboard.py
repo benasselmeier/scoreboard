@@ -43,7 +43,6 @@ class Scoreboard():
                 setattr(self, 'teamBScore', self.teamBScore + 1)
 
     def playSoundEffect(self, type):
-        print
         if(type != ''):
             sounds = os.listdir('./Sounds/' + type + '/')
             soundToPlay = str('/Sounds/' + type + '/' + random.choice(sounds))

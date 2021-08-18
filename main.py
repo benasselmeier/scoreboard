@@ -25,7 +25,6 @@ while scoreboard.teamAWins < 2 and scoreboard.teamBWins < 2:
         scoreboard.addGoal('Black')
         scoreboard.playSoundEffect('Goal')
         scoreboard.checkGameWin()
-        scoreboard.checkMatchWin()
         scoreboard.display()
     time.sleep(0.5)
 
